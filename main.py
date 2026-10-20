@@ -131,11 +131,12 @@ def draw_minimap_overlay(screen, player_x, player_y, ray_hits, game_map, tile_si
     surface = pygame.Surface((size, size), pygame.SRCALPHA)
     surface.fill((*config.BACKGROUND_COLOR, config.OVERLAY_MINIMAP_ALPHA))
     tile = tile_size * factor
-    for row in range(min(map_size, len(game_map))):
-        g_row = game_map[row]
-        for col in range(min(map_size, len(g_row))):
-            if g_row[col] == 1:
-                pygame.draw.rect(surface, config.MINIMAP_WALL_COLOR, (col*tile, row*tile, max(tile-1,1), max(tile-1,1)))
+    for row in range(map_size):
+        if row >= 0 and row < len(game_map):
+            g_row = game_map[row]
+            for col in range(map_size):
+                if col >= 0 and col < len(g_row) and g_row[col] == 1:
+                    pygame.draw.rect(surface, config.MINIMAP_WALL_COLOR, (col*tile, row*tile, max(tile-1,1), max(tile-1,1)))
     for hit_x, hit_y, depth, ray_angle in ray_hits:
         pygame.draw.line(surface, config.RAY_COLOR, (player_x*factor, player_y*factor), (hit_x*factor, hit_y*factor))
     # enemies
