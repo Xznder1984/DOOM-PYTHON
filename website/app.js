@@ -1,21 +1,28 @@
-// Simple client-side rate limiting for form-like interactions (if any)
-// and helps with 404 page behavior if hosted with routing
+// Smooth scrolling for anchor links
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+            target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+    });
+});
 
-const RATE_LIMIT_KEY = "doom_py_last_req";
-const RATE_LIMIT_MS = 2000; // 2 seconds simple throttle
+// Add scroll animation
+const observerOptions = {
+    threshold: 0.1,
+    rootMargin: '0px 0px -50px 0px'
+};
 
-function isRateLimited() {
-  const now = Date.now();
-  const last = parseInt(localStorage.getItem(RATE_LIMIT_KEY) || "0");
-  if (now - last < RATE_LIMIT_MS) return true;
-  localStorage.setItem(RATE_LIMIT_KEY, String(now));
-  return false;
-}
+const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            entry.target.classList.add('animate__animated', 'animate__fadeInUp');
+        }
+    });
+}, observerOptions);
 
-// gentle throttle on link clicks if needed
-document.addEventListener("click", (e) => {
-  const t = e.target;
-  if (t.tagName === "A" && isRateLimited()) {
-    e.preventDefault();
-  }
+document.querySelectorAll('.feature-card, section > h2').forEach(el => {
+    observer.observe(el);
 });

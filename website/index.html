@@ -3,107 +3,192 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DOOM-PYTHON | Tiny Raycaster Game</title>
-    <link rel="stylesheet" href="style.css">
+    <title>DOOM-PYTHON | Doom-style Raycaster in Python</title>
+    <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Courier+Prime:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+    <link rel="stylesheet" href="style.css">
 </head>
-<body>
-    <header class="header">
-        <nav class="nav">
-            <div class="nav-brand">DOOM-PYTHON</div>
-            <div class="nav-links">
-                <a href="#features">Features</a>
-                <a href="#download">Download</a>
-                <a href="#maps">Maps</a>
-                <a href="https://github.com/Xznder1984/DOOM-PYTHON" target="_blank" rel="noopener">GitHub</a>
+<body class="bg-black text-white font-['Inter']">
+    <header class="sticky top-0 z-50 bg-black/80 backdrop-blur border-b border-red-900/40">
+        <nav class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <div class="w-8 h-8 bg-gradient-to-br from-red-600 to-red-900 rounded flex items-center justify-center font-bold">D</div>
+                <span class="text-xl font-bold tracking-tight">DOOM-PYTHON</span>
+            </div>
+            <div class="hidden md:flex items-center gap-8 text-sm">
+                <a href="#features" class="hover:text-red-400 transition">Features</a>
+                <a href="#docs" class="hover:text-red-400 transition">Documentation</a>
+                <a href="#maps" class="hover:text-red-400 transition">Modding</a>
+                <a href="#download" class="hover:text-red-400 transition">Download</a>
+                <a href="https://github.com/Xznder1984/DOOM-PYTHON" target="_blank" rel="noopener" class="px-4 py-2 bg-red-600 hover:bg-red-700 rounded-lg transition">GitHub</a>
             </div>
         </nav>
     </header>
 
     <main>
-        <section class="hero">
-            <div class="hero-content">
-                <h1 class="hero-title">DOOM-PYTHON</h1>
-                <p class="hero-subtitle">A tiny, easy-to-hack Doom-style raycaster. Big view. Ghosts. Guns. Custom maps.</p>
-                <div class="hero-buttons">
-                    <a href="https://github.com/Xznder1984/DOOM-PYTHON" class="btn btn-primary">View on GitHub</a>
-                    <a href="#download" class="btn btn-secondary">Get Started</a>
-                </div>
-            </div>
-            <div class="hero-art">
-                <div class="art-box">
-                    <div class="art-row">################################</div>
-                    <div class="art-row">#.................R............#</div>
-                    <div class="art-row">#..G...........................#</div>
-                    <div class="art-row">#..............................#</div>
-                    <div class="art-row">################################</div>
-                    <div class="art-label">G = Ghost | R = Raycaster</div>
-                </div>
-            </div>
-        </section>
-
-        <section id="features" class="features">
-            <h2 class="section-title">Features</h2>
-            <div class="features-grid">
-                <div class="feature-card">
-                    <h3>Classic Raycasting</h3>
-                    <p>First-person view with sky, floor, walls. Default is big raycasting + small map overlay.</p>
-                </div>
-                <div class="feature-card">
-                    <h3>Pac-Man Style Ghosts</h3>
-                    <p>Four colorful ghosts that chase you around the level.</p>
-                </div>
-                <div class="feature-card">
-                    <h3>4 Guns + Ammo</h3>
-                    <p>Pistol, Shotgun, Chaingun, Plasma Rifle. Cycle with 1-4 or Q/E, shoot with SPACE.</p>
-                </div>
-                <div class="feature-card">
-                    <h3>Easy Custom Maps</h3>
-                    <p>Draw ASCII maps in seconds. Add to maps/custom_maps.py and pick with TAB.</p>
-                </div>
-                <div class="feature-card">
-                    <h3>Split Into Files</h3>
-                    <p>Clean, readable code split across files so you can actually learn and mod it.</p>
-                </div>
-                <div class="feature-card">
-                    <h3>Mouse Look</h3>
-                    <p>Look around with your mouse, move with WASD. Feels great.</p>
+        <section class="relative overflow-hidden">
+            <div class="absolute inset-0 bg-gradient-to-b from-red-950/20 via-black to-black"></div>
+            <div class="relative max-w-7xl mx-auto px-6 py-24 md:py-32">
+                <div class="max-w-3xl">
+                    <h1 class="text-5xl md:text-7xl font-extrabold mb-6 animate__animated animate__fadeInUp">
+                        <span class="bg-gradient-to-r from-red-500 to-orange-500 bg-clip-text text-transparent">DOOM</span> IN PYTHON
+                    </h1>
+                    <p class="text-xl md:text-2xl text-gray-300 mb-8 animate__animated animate__fadeInUp animate__delay-1s">
+                        A fully playable Doom-style raycaster built from scratch with Pygame. Easy to hack, mod, and extend.
+                    </p>
+                    <div class="flex flex-wrap gap-4 animate__animated animate__fadeInUp animate__delay-2s">
+                        <a href="#download" class="px-8 py-3 bg-red-600 hover:bg-red-700 rounded-lg font-semibold transition transform hover:scale-105">Get Started</a>
+                        <a href="#docs" class="px-8 py-3 bg-white/10 hover:bg-white/20 rounded-lg font-semibold transition backdrop-blur">Read Docs</a>
+                        <a href="https://github.com/Xznder1984/DOOM-PYTHON" class="px-8 py-3 border border-red-600 hover:bg-red-600/10 rounded-lg font-semibold transition">View Source</a>
+                    </div>
                 </div>
             </div>
         </section>
 
-        <section id="download" class="download">
-            <h2 class="section-title">Quick Start</h2>
-            <div class="code-block">
-                <div class="code-line"><span class="prompt">$</span> pip install pygame-ce</div>
-                <div class="code-line"><span class="prompt">$</span> git clone https://github.com/Xznder1984/DOOM-PYTHON.git</div>
-                <div class="code-line"><span class="prompt">$</span> cd DOOM-PYTHON</div>
-                <div class="code-line"><span class="prompt">$</span> python run.py</div>
+        <section id="features" class="max-w-7xl mx-auto px-6 py-20">
+            <h2 class="text-4xl font-bold mb-12 text-center">Features</h2>
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div class="p-6 bg-gradient-to-br from-white/5 to-white/0 rounded-xl border border-white/10 hover:border-red-600/50 transition">
+                    <div class="text-3xl mb-4">🎮</div>
+                    <h3 class="text-xl font-bold mb-2">True Raycasting</h3>
+                    <p class="text-gray-400">Classic first-person rendering with wall projection, sky/floor, and smooth movement.</p>
+                </div>
+                <div class="p-6 bg-gradient-to-br from-white/5 to-white/0 rounded-xl border border-white/10 hover:border-red-600/50 transition">
+                    <div class="text-3xl mb-4">👻</div>
+                    <h3 class="text-xl font-bold mb-2">Pac-Man Ghosts</h3>
+                    <p class="text-gray-400">Four classic ghosts with unique AI - they hunt, wander, and sense your presence.</p>
+                </div>
+                <div class="p-6 bg-gradient-to-br from-white/5 to-white/0 rounded-xl border border-white/10 hover:border-red-600/50 transition">
+                    <div class="text-3xl mb-4">🔫</div>
+                    <h3 class="text-xl font-bold mb-2">4 Weapons Arsenal</h3>
+                    <p class="text-gray-400">Pistol, Shotgun, Chaingun, and Plasma Rifle with ammo pickups and proper ballistics.</p>
+                </div>
+                <div class="p-6 bg-gradient-to-br from-white/5 to-white/0 rounded-xl border border-white/10 hover:border-red-600/50 transition">
+                    <div class="text-3xl mb-4">🗺️</div>
+                    <h3 class="text-xl font-bold mb-2">Custom Maps</h3>
+                    <p class="text-gray-400">Design levels in simple ASCII format. Load instantly with the built-in map selector (TAB).</p>
+                </div>
+                <div class="p-6 bg-gradient-to-br from-white/5 to-white/0 rounded-xl border border-white/10 hover:border-red-600/50 transition">
+                    <div class="text-3xl mb-4">🖱️</div>
+                    <h3 class="text-xl font-bold mb-2">Mouse Look</h3>
+                    <p class="text-gray-400">Full mouse control with configurable sensitivity. Feels smooth and responsive.</p>
+                </div>
+                <div class="p-6 bg-gradient-to-br from-white/5 to-white/0 rounded-xl border border-white/10 hover:border-red-600/50 transition">
+                    <div class="text-3xl mb-4">🧩</div>
+                    <h3 class="text-xl font-bold mb-2">Modular Codebase</h3>
+                    <p class="text-gray-400">Cleanly split into modules - easy to understand, debug, and extend.</p>
+                </div>
             </div>
         </section>
 
-        <section id="maps" class="maps">
-            <h2 class="section-title">Make Your Own Map</h2>
-            <div class="map-example">
-                <pre class="map-pre">reg('my_map', 'My Map', [
-    "##########",
-    "#S........#",
-    "#..####..#",
-    "#........#",
-    "##########",
-])</pre>
-                <p class="map-text">Add this to <code>maps/custom_maps.py</code> and it'll show up in the TAB menu.</p>
+        <section id="docs" class="max-w-7xl mx-auto px-6 py-20">
+            <h2 class="text-4xl font-bold mb-12 text-center">Documentation</h2>
+            <div class="grid md:grid-cols-2 gap-6">
+                <a href="https://github.com/Xznder1984/DOOM-PYTHON/blob/main/docs/GETTING_STARTED.md" target="_blank" class="p-6 bg-gradient-to-br from-red-950/40 to-transparent rounded-xl border border-red-900/50 hover:border-red-500 transition group">
+                    <h3 class="text-xl font-bold mb-2 group-hover:text-red-400 transition">🚀 Getting Started</h3>
+                    <p class="text-gray-400">Installation, controls, and first steps to run the game.</p>
+                </a>
+                <a href="https://github.com/Xznder1984/DOOM-PYTHON/blob/main/docs/MAPS.md" target="_blank" class="p-6 bg-gradient-to-br from-red-950/40 to-transparent rounded-xl border border-red-900/50 hover:border-red-500 transition group">
+                    <h3 class="text-xl font-bold mb-2 group-hover:text-red-400 transition">🗺️ Map Creation Guide</h3>
+                    <p class="text-gray-400">Learn how to create custom maps with ASCII and add them to the game.</p>
+                </a>
+                <a href="https://github.com/Xznder1984/DOOM-PYTHON/blob/main/docs/WEAPONS_ENEMIES.md" target="_blank" class="p-6 bg-gradient-to-br from-red-950/40 to-transparent rounded-xl border border-red-900/50 hover:border-red-500 transition group">
+                    <h3 class="text-xl font-bold mb-2 group-hover:text-red-400 transition">⚔️ Weapons & Enemies</h3>
+                    <p class="text-gray-400">Tweak weapons, ammo, enemy behavior and AI to your liking.</p>
+                </a>
+                <a href="https://github.com/Xznder1984/DOOM-PYTHON/blob/main/docs/CONTRIBUTING.md" target="_blank" class="p-6 bg-gradient-to-br from-red-950/40 to-transparent rounded-xl border border-red-900/50 hover:border-red-500 transition group">
+                    <h3 class="text-xl font-bold mb-2 group-hover:text-red-400 transition">🤝 Contributing</h3>
+                    <p class="text-gray-400">Guidelines for contributing to the project.</p>
+                </a>
+            </div>
+        </section>
+
+        <section id="download" class="max-w-7xl mx-auto px-6 py-20">
+            <h2 class="text-4xl font-bold mb-12 text-center">Quick Start</h2>
+            <div class="max-w-3xl mx-auto">
+                <div class="bg-gray-900 rounded-xl border border-gray-700 overflow-hidden">
+                    <div class="flex items-center gap-2 px-4 py-3 bg-gray-800 border-b border-gray-700">
+                        <div class="w-3 h-3 rounded-full bg-red-500"></div>
+                        <div class="w-3 h-3 rounded-full bg-yellow-500"></div>
+                        <div class="w-3 h-3 rounded-full bg-green-500"></div>
+                        <span class="ml-4 text-sm text-gray-400 font-['JetBrains_Mono']">terminal</span>
+                    </div>
+                    <div class="p-6 space-y-3 font-['JetBrains_Mono'] text-sm">
+                        <div class="flex items-center gap-3 group">
+                            <span class="text-green-400">$</span>
+                            <code class="text-gray-300 flex-1">pip install pygame-ce</code>
+                            <button onclick="copyCmd(this, 'pip install pygame-ce')" class="opacity-0 group-hover:opacity-100 px-2 py-1 bg-gray-700 hover:bg-gray-600 rounded text-xs transition">Copy</button>
+                        </div>
+                        <div class="flex items-center gap-3 group">
+                            <span class="text-green-400">$</span>
+                            <code class="text-gray-300 flex-1">git clone https://github.com/Xznder1984/DOOM-PYTHON.git</code>
+                            <button onclick="copyCmd(this, 'git clone https://github.com/Xznder1984/DOOM-PYTHON.git')" class="opacity-0 group-hover:opacity-100 px-2 py-1 bg-gray-700 hover:bg-gray-600 rounded text-xs transition">Copy</button>
+                        </div>
+                        <div class="flex items-center gap-3 group">
+                            <span class="text-green-400">$</span>
+                            <code class="text-gray-300 flex-1">cd DOOM-PYTHON</code>
+                            <button onclick="copyCmd(this, 'cd DOOM-PYTHON')" class="opacity-0 group-hover:opacity-100 px-2 py-1 bg-gray-700 hover:bg-gray-600 rounded text-xs transition">Copy</button>
+                        </div>
+                        <div class="flex items-center gap-3 group">
+                            <span class="text-green-400">$</span>
+                            <code class="text-gray-300 flex-1">python run.py</code>
+                            <button onclick="copyCmd(this, 'python run.py')" class="opacity-0 group-hover:opacity-100 px-2 py-1 bg-gray-700 hover:bg-gray-600 rounded text-xs transition">Copy</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="maps" class="max-w-7xl mx-auto px-6 py-20">
+            <h2 class="text-4xl font-bold mb-12 text-center">Create Your Own Maps</h2>
+            <div class="grid md:grid-cols-2 gap-8 items-center">
+                <div>
+                    <h3 class="text-2xl font-bold mb-4">It's ridiculously easy</h3>
+                    <p class="text-gray-400 mb-6">Maps are just ASCII grids. Add them to <code class="px-2 py-1 bg-gray-800 rounded text-red-400">maps/custom_maps.py</code> and they'll appear in the in-game map selector (press TAB).</p>
+                    <ul class="space-y-3 text-gray-300">
+                        <li class="flex items-center gap-3"><span class="text-red-500">#</span> = Wall</li>
+                        <li class="flex items-center gap-3"><span class="text-gray-500">.</span> = Floor</li>
+                        <li class="flex items-center gap-3"><span class="text-green-500">S</span> = Player Start</li>
+                    </ul>
+                </div>
+                <div class="bg-gray-900 rounded-xl border border-gray-700 overflow-hidden">
+                    <div class="px-4 py-3 bg-gray-800 border-b border-gray-700 font-['JetBrains_Mono'] text-sm text-gray-400">maps/custom_maps.py</div>
+                    <div class="p-6 font-['JetBrains_Mono'] text-sm">
+                        <div class="text-purple-400">from map_manager import register_map</div>
+                        <div class="mt-4"></div>
+                        <div class="text-gray-500"># Add your maps here</div>
+                        <div class="text-blue-400">register_map<span class="text-gray-300">(</span><span class="text-green-400">'arena'</span><span class="text-gray-300">, </span><span class="text-green-400">'Death Arena'</span><span class="text-gray-300">, [</span></div>
+                        <div class="pl-4 text-gray-400">    <span class="text-green-400">"##########"</span>,</div>
+                        <div class="pl-4 text-gray-400">    <span class="text-green-400">"#S........#"</span>,</div>
+                        <div class="pl-4 text-gray-400">    <span class="text-green-400">"#..####..#"</span>,</div>
+                        <div class="pl-4 text-gray-400">    <span class="text-green-400">"#........#"</span>,</div>
+                        <div class="pl-4 text-gray-400">    <span class="text-green-400">"##########"</span>,</div>
+                        <div class="text-gray-300">])</div>
+                    </div>
+                </div>
             </div>
         </section>
     </main>
 
-    <footer class="footer">
-        <p>Made for learning and hacking. MIT License.</p>
-        <p><a href="https://github.com/Xznder1984/DOOM-PYTHON">github.com/Xznder1984/DOOM-PYTHON</a></p>
+    <footer class="border-t border-white/10 mt-20">
+        <div class="max-w-7xl mx-auto px-6 py-12 text-center text-gray-400">
+            <p class="mb-2">Made for learning and hacking. MIT License.</p>
+            <p><a href="https://github.com/Xznder1984/DOOM-PYTHON" class="hover:text-red-400 transition">github.com/Xznder1984/DOOM-PYTHON</a></p>
+        </div>
     </footer>
 
     <script src="app.js"></script>
+    <script>
+        function copyCmd(btn, text) {
+            navigator.clipboard.writeText(text).then(() => {
+                const old = btn.textContent;
+                btn.textContent = 'Copied!';
+                setTimeout(() => btn.textContent = old, 2000);
+            });
+        }
+    </script>
 </body>
 </html>
