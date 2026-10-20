@@ -60,25 +60,31 @@ def collides(x, y, game_map, tile_size, map_size, radius):
 
 
 def move_player(x, y, dx, dy, game_map, tile_size, map_size, radius):
-    # try diagonal first? no - axis slide
-    nx, ny = x, y
-    # try to move
-    if not collides(nx + dx, ny, game_map, tile_size, map_size, radius):
-        nx += dx
-    elif not collides(nx + dx * 0.5, ny, game_map, tile_size, map_size, radius):
-        nx += dx * 0.5
-    if not collides(nx, ny + dy, game_map, tile_size, map_size, radius):
-        ny += dy
-    elif not collides(nx, ny + dy * 0.5, game_map, tile_size, map_size, radius):
-        ny += dy * 0.5
+    nx, ny = x + dx, y + dy
+    if not collides(nx, ny, game_map, tile_size, map_size, radius):
+        return nx, ny
+    # try axis
+    if not collides(x + dx, y, game_map, tile_size, map_size, radius):
+        x2 = x + dx; y2 = y
+        if not collides(x2, y2, game_map, tile_size, map_size, radius):
+            return x2, y2
+    if not collides(x, y + dy, game_map, tile_size, map_size, radius):
+        x2 = x; y2 = y + dy
+        if not collides(x2, y2, game_map, tile_size, map_size, radius):
+            return x2, y2
+    # try smaller
+    for m in (0.7, 0.5, 0.3):
+        if not collides(x + dx*m, y, game_map, tile_size, map_size, radius):
+            return x + dx*m, y
+        if not collides(x, y + dy*m, game_map, tile_size, map_size, radius):
+            return x, y + dy*m
     # unstuck
-    if collides(nx, ny, game_map, tile_size, map_size, radius):
-        for step in (2, 1, 0.5, 0.25):
-            for ax, ay in ((1,0),(-1,0),(0,1),(0,-1)):
-                cx, cy = x + ax*step, y + ay*step
-                if not collides(cx, cy, game_map, tile_size, map_size, radius):
-                    return cx, cy
-    return nx, ny
+    for step in (4, 2, 1, 0.5):
+        for ax, ay in ((1,0),(-1,0),(0,1),(0,-1),(1,1),(1,-1),(-1,1),(-1,-1)):
+            cx, cy = x + ax*step, y + ay*step
+            if not collides(cx, cy, game_map, tile_size, map_size, radius):
+                return cx, cy
+    return x, y
 
 
 # ---------------------------------------------------------------------------
