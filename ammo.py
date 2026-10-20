@@ -19,9 +19,10 @@ AMMO_TYPES = {
 def place_ammo_random(game_map, tile_size, map_size, count=12):
     pickups = []
     free = []
-    for r in range(map_size):
-        for c in range(map_size):
-            if game_map[r][c] == 0:
+    for r in range(min(map_size, len(game_map))):
+        row = game_map[r] if r < len(game_map) else []
+        for c in range(min(map_size, len(row))):
+            if row[c] == 0:
                 free.append((c, r))
     random.shuffle(free)
     types = list(AMMO_TYPES.keys())
