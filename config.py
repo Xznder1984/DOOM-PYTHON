@@ -123,7 +123,7 @@ PLAYER_START_X = (PLAYER_START_COL + 0.5) * TILE_SIZE
 PLAYER_START_Y = (PLAYER_START_ROW + 0.5) * TILE_SIZE
 PLAYER_START_ANGLE = 0.0  # in radians (0 = facing right/east)
 PLAYER_SPEED = 3.0        # pixels moved per frame
-PLAYER_RADIUS = 10        # size of the player "body" used for wall collision (smaller = less stuck, but safer with 4-point checks)
+PLAYER_RADIUS = 6        # smaller radius to avoid getting stuck in tight areas
 
 # ---------------------------------------------------------------------------
 # MOUSE LOOK

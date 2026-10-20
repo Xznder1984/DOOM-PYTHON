@@ -49,10 +49,10 @@ def point_inside_wall(x, y, game_map, tile_size, map_size):
 
 def collides(x, y, game_map, tile_size, map_size, radius):
     r = radius
-    # sample more points around the circle to catch thin wall gaps / corners
-    for ox in (-r, -r * 0.6, 0, r * 0.6, r):
-        for oy in (-r, -r * 0.6, 0, r * 0.6, r):
-            if (ox == 0 and oy == 0):
+    # check 4 corners + center-ish points
+    for ox in (-r, 0, r):
+        for oy in (-r, 0, r):
+            if ox == 0 and oy == 0:
                 continue
             if is_wall(x + ox, y + oy, game_map, tile_size, map_size):
                 return True
@@ -60,20 +60,25 @@ def collides(x, y, game_map, tile_size, map_size, radius):
 
 
 def move_player(x, y, dx, dy, game_map, tile_size, map_size, radius):
-    # slide along walls - move on X first, then Y
-    if not collides(x + dx, y, game_map, tile_size, map_size, radius):
-        x += dx
-    if not collides(x, y + dy, game_map, tile_size, map_size, radius):
-        y += dy
-    # if still stuck, push out a bit
-    if collides(x, y, game_map, tile_size, map_size, radius):
-        # try tiny steps
-        for step in (1, 0.5, 0.25):
+    # try diagonal first? no - axis slide
+    nx, ny = x, y
+    # try to move
+    if not collides(nx + dx, ny, game_map, tile_size, map_size, radius):
+        nx += dx
+    elif not collides(nx + dx * 0.5, ny, game_map, tile_size, map_size, radius):
+        nx += dx * 0.5
+    if not collides(nx, ny + dy, game_map, tile_size, map_size, radius):
+        ny += dy
+    elif not collides(nx, ny + dy * 0.5, game_map, tile_size, map_size, radius):
+        ny += dy * 0.5
+    # unstuck
+    if collides(nx, ny, game_map, tile_size, map_size, radius):
+        for step in (2, 1, 0.5, 0.25):
             for ax, ay in ((1,0),(-1,0),(0,1),(0,-1)):
-                nx, ny = x + ax*step, y + ay*step
-                if not collides(nx, ny, game_map, tile_size, map_size, radius):
-                    return nx, ny
-    return x, y
+                cx, cy = x + ax*step, y + ay*step
+                if not collides(cx, cy, game_map, tile_size, map_size, radius):
+                    return cx, cy
+    return nx, ny
 
 
 # ---------------------------------------------------------------------------
@@ -382,15 +387,17 @@ def game(screen, clock, map_key=None):
                     enemy['x'], enemy['y'] = ex, ey
             else:
                 if '_dir' not in enemy:
-                    enemy['_dir'] = random.uniform(0, math.pi*2)
-                if random.random() < 0.02:
-                    enemy['_dir'] = random.uniform(0, math.pi*2)
+                    import random as _r
+                    enemy['_dir'] = _r.uniform(0, math.pi*2)
+                import random as _r
+                if _r.random() < 0.02:
+                    enemy['_dir'] = _r.uniform(0, math.pi*2)
                 ex = enemy['x'] + math.cos(enemy['_dir']) * (etype['speed'] * 0.6)
                 ey = enemy['y'] + math.sin(enemy['_dir']) * (etype['speed'] * 0.6)
                 if not collides(ex, ey, game_map, tile_size, map_size, ENEMY_RADIUS):
                     enemy['x'], enemy['y'] = ex, ey
                 else:
-                    enemy['_dir'] = random.uniform(0, math.pi*2)
+                    enemy['_dir'] = _r.uniform(0, math.pi*2)
             # hurt player if close
             if edist < 18:
                 health -= 0.1

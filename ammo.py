@@ -3,6 +3,7 @@ AMMO PICKUPS
 ============
 Easy to add ammo on the map. Can be placed randomly or manually.
 """
+import math
 import random
 
 import pygame
@@ -47,8 +48,8 @@ def draw_ammo_on_minimap(screen, pickups, factor, tile_size, map_size):
 
 def draw_ammo_pickups_3d(screen, player_x, player_y, player_angle, pickups, view_x, view_width,
                          game_map, tile_size, map_size):
-    half_height = config.SCREEN_HEIGHT // 2
-    import config
+    import config as _config
+    half_height = _config.SCREEN_HEIGHT // 2
     for p in pickups:
         if not p.get("alive"):
             continue
@@ -63,11 +64,11 @@ def draw_ammo_pickups_3d(screen, player_x, player_y, player_angle, pickups, view
             ang_diff += 2 * math.pi
         while ang_diff > math.pi:
             ang_diff -= 2 * math.pi
-        if abs(ang_diff) > config.HALF_FOV * 0.8:
+        if abs(ang_diff) > _config.HALF_FOV * 0.8:
             continue
         dist_c = dist * math.cos(ang_diff)
-        size = int((tile_size * config.WALL_PROJECTION_DISTANCE) / (dist_c + 0.0001) * 0.25)
-        screen_x = view_x + (0.5 + ang_diff / config.FOV) * view_width - size // 2
+        size = int((tile_size * _config.WALL_PROJECTION_DISTANCE) / (dist_c + 0.0001) * 0.25)
+        screen_x = view_x + (0.5 + ang_diff / _config.FOV) * view_width - size // 2
         screen_y = half_height + 20
         color = AMMO_TYPES.get(p["type"], {"color": (255, 255, 0)})["color"]
         pygame.draw.rect(screen, color, (int(screen_x), int(screen_y), size, size))
