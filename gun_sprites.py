@@ -1,9 +1,7 @@
 """
-GUNS SPRITES / HUD
-==================
-Draw weapon view model on screen (simple placeholder that looks like a gun).
-Also handles crosshair.
+GUN SPRITES - draw actual gun images facing forward
 """
+import os
 
 import pygame
 
@@ -11,40 +9,58 @@ import pygame
 class GunSprite:
     def __init__(self, screen):
         self.screen = screen
+        self.gun_images = {}
+        self.load_guns()
+
+    def load_guns(self):
+        base = os.path.join(os.path.dirname(__file__), "assets", "guns")
+        names = {
+            "Pistol": "pistol.png",
+            "Shotgun": "shotgun.png",
+            "Chaingun": "chaingun.png",
+            "Plasma Rifle": "plasma.png",
+        }
+        for name, fname in names.items():
+            path = os.path.join(base, fname)
+            try:
+                img = pygame.image.load(path).convert_alpha()
+                self.gun_images[name] = img
+            except Exception:
+                self.gun_images[name] = None
 
     def draw_weapon(self, weapon_name, ammo_info, firing=False):
         w = self.screen.get_width()
         h = self.screen.get_height()
-        # base gun body
-        if weapon_name == "Pistol":
-            color = (100, 100, 120)
-            barrel = (180, 180, 180)
-            pygame.draw.rect(self.screen, color, (w * 0.65, h * 0.65, w * 0.15, h * 0.08), border_radius=4)
-            pygame.draw.rect(self.screen, barrel, (w * 0.8, h * 0.67, w * 0.08, h * 0.02), border_radius=2)
-            pygame.draw.rect(self.screen, (60, 60, 70), (w * 0.65, h * 0.72, w * 0.12, h * 0.06), border_radius=3)
-        elif weapon_name == "Shotgun":
-            color = (160, 120, 60)
-            pygame.draw.rect(self.screen, color, (w * 0.6, h * 0.67, w * 0.25, h * 0.05), border_radius=4)
-            pygame.draw.rect(self.screen, (80, 60, 40), (w * 0.6, h * 0.72, w * 0.22, h * 0.05), border_radius=3)
-        elif weapon_name == "Chaingun":
-            color = (140, 140, 140)
-            pygame.draw.rect(self.screen, color, (w * 0.55, h * 0.65, w * 0.25, h * 0.07), border_radius=6)
-            pygame.draw.rect(self.screen, (60, 60, 60), (w * 0.55, h * 0.72, w * 0.2, h * 0.08), border_radius=4)
-            pygame.draw.rect(self.screen, (180, 180, 180), (w * 0.78, h * 0.66, w * 0.08, h * 0.03), border_radius=2)
-        elif weapon_name == "Plasma Rifle":
-            color = (80, 160, 255)
-            glow = (120, 200, 255)
-            pygame.draw.rect(self.screen, color, (w * 0.58, h * 0.66, w * 0.22, h * 0.06), border_radius=8)
-            pygame.draw.rect(self.screen, (20, 80, 160), (w * 0.58, h * 0.72, w * 0.18, h * 0.07), border_radius=6)
+        img = self.gun_images.get(weapon_name)
+        if img is not None:
+            # scale to fit, point forward at bottom middle
+            scale = 0.45
+            iw, ih = img.get_size()
+            nw, nh = int(iw * scale), int(ih * scale)
+            scaled = pygame.transform.scale(img, (nw, nh))
             if firing:
-                pygame.draw.circle(self.screen, glow, (int(w * 0.8), int(h * 0.69)), 6)
-            else:
-                pygame.draw.circle(self.screen, (40, 100, 200), (int(w * 0.8), int(h * 0.69)), 5)
+                # slight recoil
+                scaled = pygame.transform.scale(scaled, (int(nw * 0.98), int(nh * 0.98)))
+                nw, nh = scaled.get_size()
+            x = (w - nw) // 2
+            y = h - nh + 10
+            self.screen.blit(scaled, (x, y))
+            return
+        # fallback
+        if weapon_name == "Pistol":
+            pygame.draw.rect(self.screen, (90, 90, 100), (w*0.48, h*0.72, w*0.04, h*0.12), border_radius=4)
+            pygame.draw.rect(self.screen, (160, 160, 170), (w*0.48, h*0.7, w*0.04, h*0.04), border_radius=3)
+        elif weapon_name == "Shotgun":
+            pygame.draw.rect(self.screen, (140, 100, 60), (w*0.47, h*0.7, w*0.06, h*0.14), border_radius=6)
+        elif weapon_name == "Chaingun":
+            pygame.draw.rect(self.screen, (130, 130, 130), (w*0.46, h*0.68, w*0.08, h*0.16), border_radius=8)
+        elif weapon_name == "Plasma Rifle":
+            pygame.draw.rect(self.screen, (70, 150, 245), (w*0.47, h*0.69, w*0.06, h*0.15), border_radius=10)
 
     def draw_crosshair(self):
         w = self.screen.get_width()
         h = self.screen.get_height()
         cx, cy = w // 2, h // 2
-        pygame.draw.line(self.screen, (255, 255, 255), (cx - 8, cy), (cx + 8, cy), 2)
-        pygame.draw.line(self.screen, (255, 255, 255), (cx, cy - 8), (cx, cy + 8), 2)
+        pygame.draw.line(self.screen, (255, 255, 255), (cx - 6, cy), (cx + 6, cy), 2)
+        pygame.draw.line(self.screen, (255, 255, 255), (cx, cy - 6), (cx, cy + 6), 2)
         pygame.draw.circle(self.screen, (255, 255, 255), (cx, cy), 2, 1)
