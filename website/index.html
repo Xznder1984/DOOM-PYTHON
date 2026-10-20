@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DOOM-PYTHON | Tiny Raycaster Game</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Courier+Prime:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header class="header">
+        <nav class="nav">
+            <div class="nav-brand">DOOM-PYTHON</div>
+            <div class="nav-links">
+                <a href="#features">Features</a>
+                <a href="#download">Download</a>
+                <a href="#maps">Maps</a>
+                <a href="https://github.com/Xznder1984/DOOM-PYTHON" target="_blank" rel="noopener">GitHub</a>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section class="hero">
+            <div class="hero-content">
+                <h1 class="hero-title">DOOM-PYTHON</h1>
+                <p class="hero-subtitle">A tiny, easy-to-hack Doom-style raycaster. Big view. Ghosts. Guns. Custom maps.</p>
+                <div class="hero-buttons">
+                    <a href="https://github.com/Xznder1984/DOOM-PYTHON" class="btn btn-primary">View on GitHub</a>
+                    <a href="#download" class="btn btn-secondary">Get Started</a>
+                </div>
+            </div>
+            <div class="hero-art">
+                <div class="art-box">
+                    <div class="art-row">################################</div>
+                    <div class="art-row">#.................R............#</div>
+                    <div class="art-row">#..G...........................#</div>
+                    <div class="art-row">#..............................#</div>
+                    <div class="art-row">################################</div>
+                    <div class="art-label">G = Ghost | R = Raycaster</div>
+                </div>
+            </div>
+        </section>
+
+        <section id="features" class="features">
+            <h2 class="section-title">Features</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <h3>Classic Raycasting</h3>
+                    <p>First-person view with sky, floor, walls. Default is big raycasting + small map overlay.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>Pac-Man Style Ghosts</h3>
+                    <p>Four colorful ghosts that chase you around the level.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>4 Guns + Ammo</h3>
+                    <p>Pistol, Shotgun, Chaingun, Plasma Rifle. Cycle with 1-4 or Q/E, shoot with SPACE.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>Easy Custom Maps</h3>
+                    <p>Draw ASCII maps in seconds. Add to maps/custom_maps.py and pick with TAB.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>Split Into Files</h3>
+                    <p>Clean, readable code split across files so you can actually learn and mod it.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>Mouse Look</h3>
+                    <p>Look around with your mouse, move with WASD. Feels great.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="download" class="download">
+            <h2 class="section-title">Quick Start</h2>
+            <div class="code-block">
+                <div class="code-line"><span class="prompt">$</span> pip install pygame-ce</div>
+                <div class="code-line"><span class="prompt">$</span> git clone https://github.com/Xznder1984/DOOM-PYTHON.git</div>
+                <div class="code-line"><span class="prompt">$</span> cd DOOM-PYTHON</div>
+                <div class="code-line"><span class="prompt">$</span> python run.py</div>
+            </div>
+        </section>
+
+        <section id="maps" class="maps">
+            <h2 class="section-title">Make Your Own Map</h2>
+            <div class="map-example">
+                <pre class="map-pre">reg('my_map', 'My Map', [
+    "##########",
+    "#S........#",
+    "#..####..#",
+    "#........#",
+    "##########",
+])</pre>
+                <p class="map-text">Add this to <code>maps/custom_maps.py</code> and it'll show up in the TAB menu.</p>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <p>Made for learning and hacking. MIT License.</p>
+        <p><a href="https://github.com/Xznder1984/DOOM-PYTHON">github.com/Xznder1984/DOOM-PYTHON</a></p>
+    </footer>
+
+    <script src="app.js"></script>
+</body>
+</html>
