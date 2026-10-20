@@ -49,9 +49,9 @@ def point_inside_wall(x, y, game_map, tile_size, map_size):
 
 def collides(x, y, game_map, tile_size, map_size, radius):
     r = radius
-    # check 4 corners + center-ish points
-    for ox in (-r, 0, r):
-        for oy in (-r, 0, r):
+    # check multiple points for better collision
+    for ox in (-r, -r*0.7, 0, r*0.7, r):
+        for oy in (-r, -r*0.7, 0, r*0.7, r):
             if ox == 0 and oy == 0:
                 continue
             if is_wall(x + ox, y + oy, game_map, tile_size, map_size):
