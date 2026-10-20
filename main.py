@@ -131,9 +131,10 @@ def draw_minimap_overlay(screen, player_x, player_y, ray_hits, game_map, tile_si
     surface = pygame.Surface((size, size), pygame.SRCALPHA)
     surface.fill((*config.BACKGROUND_COLOR, config.OVERLAY_MINIMAP_ALPHA))
     tile = tile_size * factor
-    for row in range(map_size):
-        for col in range(map_size):
-            if game_map[row][col] == 1:
+    for row in range(min(map_size, len(game_map))):
+        g_row = game_map[row]
+        for col in range(min(map_size, len(g_row))):
+            if g_row[col] == 1:
                 pygame.draw.rect(surface, config.MINIMAP_WALL_COLOR, (col*tile, row*tile, max(tile-1,1), max(tile-1,1)))
     for hit_x, hit_y, depth, ray_angle in ray_hits:
         pygame.draw.line(surface, config.RAY_COLOR, (player_x*factor, player_y*factor), (hit_x*factor, hit_y*factor))
@@ -154,9 +155,10 @@ def draw_minimap_overlay(screen, player_x, player_y, ray_hits, game_map, tile_si
 
 
 def draw_minimap(screen, player_x, player_y, ray_hits, game_map, tile_size, map_size, enemies=None, pickups=None):
-    for row in range(map_size):
-        for col in range(map_size):
-            color = config.MINIMAP_WALL_COLOR if game_map[row][col] == 1 else config.MINIMAP_FLOOR_COLOR
+    for row in range(min(map_size, len(game_map))):
+        g_row = game_map[row]
+        for col in range(min(map_size, len(g_row))):
+            color = config.MINIMAP_WALL_COLOR if g_row[col] == 1 else config.MINIMAP_FLOOR_COLOR
             pygame.draw.rect(screen, color, (col*tile_size, row*tile_size, tile_size-2, tile_size-2))
     for hit_x, hit_y, depth, ray_angle in ray_hits:
         pygame.draw.line(screen, config.RAY_COLOR, (player_x, player_y), (hit_x, hit_y))
